@@ -1,7 +1,6 @@
 import React, { useState, useEffect, type FormEvent } from "react";
 import Head from "next/head";
 import axios from "axios";
-import Image from "next/image";
 import { MapPin, GitBranch, GithubLogo } from "phosphor-react";
 
 interface Data {
@@ -89,7 +88,7 @@ export default function Home() {
           content="Github Profile Finder by Artur Schincariol Rossi"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
       </Head>
       <form id="form" className="main" onSubmit={handleFind}>
         <h1>
@@ -122,13 +121,13 @@ export default function Home() {
         {data.map((user) => {
           return (
             <div key={user.id} className="card">
-              <Image
+              <img
                 src={user.avatar_url}
                 alt={user.name}
                 width={314}
                 height={314}
                 style={{ borderRadius: 20 }}
-              ></Image>
+              ></img>
               <h1>{user.name}</h1>
               <span className="login">@{user.login}</span>
               {user.location ? (
