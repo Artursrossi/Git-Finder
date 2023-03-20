@@ -2,16 +2,29 @@ import React, { useState, useEffect, type FormEvent } from "react";
 import Head from "next/head";
 import axios from "axios";
 import Image from "next/image";
+import { MapPin, GitBranch, GithubLogo } from "phosphor-react";
 
 interface Data {
   id: number;
+  login: string;
   name: string;
   avatar_url: string;
+  followers: number;
+  following: number;
+  location: string;
+  html_url: string;
+}
+
+interface Repos {
+  id: number;
+  name: string;
+  html_url: string;
 }
 
 export default function Home() {
   const [profile, setProfile] = useState("");
   const [data, setData] = useState<Data[]>([]);
+  const [repos, setRepos] = useState<Repos[]>([]);
 
   async function handleFind(event: FormEvent) {
     event.preventDefault();
@@ -32,6 +45,13 @@ export default function Home() {
           .getElementById("UserNotFound")
           ?.classList.remove("displayNone");
         RemoveLoadingAnimation();
+      });
+
+    axios
+      .get(`https://api.github.com/users/${profile}/repos`)
+      .then((res) => setRepos(res.data))
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -72,7 +92,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <form id="form" className="main" onSubmit={handleFind}>
-        <h1>GitFinder</h1>
+        <h1>
+          <GithubLogo size={40} style={{ marginRight: 8 }} />
+          GitFinder
+        </h1>
         <p>Buscar perfil do Github</p>
 
         <input
@@ -99,13 +122,45 @@ export default function Home() {
         {data.map((user) => {
           return (
             <div key={user.id} className="card">
-              <h1>{user.name}</h1>
               <Image
                 src={user.avatar_url}
                 alt={user.name}
                 width={314}
                 height={314}
+                style={{ borderRadius: 20 }}
               ></Image>
+              <h1>{user.name}</h1>
+              <span className="login">@{user.login}</span>
+              {user.location ? (
+                <span className="location">
+                  <MapPin size={32} />
+                  {user.location}
+                </span>
+              ) : (
+                <></>
+              )}
+              <div className="followers">
+                <span>Followers: {user.followers}</span>
+                <span>Following: {user.following}</span>
+              </div>
+              <div className="repos">
+                <h1>
+                  <GithubLogo size={32} /> Repositórios:
+                </h1>
+                {repos.map((res) => {
+                  return (
+                    <a
+                      key={res.id}
+                      className="repos-card"
+                      href={res.html_url}
+                      target="_blank"
+                    >
+                      <GitBranch size={32} />
+                      <h1>{res.name}</h1>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
