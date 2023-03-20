@@ -57,7 +57,7 @@ body * {
 }
 
 form {
-  background-image: url(../../public/githubBackground.svg);
+  background-image: url(https://artursrossi.github.io/Git-Finder/githubBackground.svg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position-x: 26rem;
