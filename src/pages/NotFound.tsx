@@ -7,7 +7,7 @@ export const PageNotFound = () => {
     <main className="not-found-main">
       <div className="not-found-container">
         <h1>Página Não Encontrada</h1>{" "}
-        <Link className="button" to="/">
+        <Link className="button" to="/Git-Finder/">
           Retornar
         </Link>
       </div>

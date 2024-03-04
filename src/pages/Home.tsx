@@ -42,7 +42,7 @@ export const PageHome = () => {
 
           <Link
             className="button"
-            to={`/user/${profile}`}
+            to={`/Git-Finder/user/${profile}`}
             data-disabled={!profile}
           >
             Buscar Perfil

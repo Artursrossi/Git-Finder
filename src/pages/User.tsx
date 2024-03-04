@@ -25,7 +25,7 @@ export const PageUser = () => {
   const { profile } = useParams();
   const navigate = useNavigate();
 
-  if (!profile) return <Navigate to="/" replace={true} />;
+  if (!profile) return <Navigate to="/Git-Finder/" replace={true} />;
 
   const [githubUserData, setGithubUserData] = useState<githubUserData | null>(
     null
@@ -46,10 +46,12 @@ export const PageUser = () => {
       );
       setGithubUserRepositories(githubUserRepositories.data);
     } catch (error: any) {
-      if (error.response.status === 404) return navigate("/user-not-found");
-      if (error.response.status === 403) return navigate("/rate-limit");
+      if (error.response.status === 404)
+        return navigate("/Git-Finder/user-not-found");
+      if (error.response.status === 403)
+        return navigate("/Git-Finder/rate-limit");
 
-      return navigate("/");
+      return navigate("/Git-Finder/");
     }
   }
 
